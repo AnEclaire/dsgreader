@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'HomePage.dart';
 import 'HistoryPage.dart';
 import 'FavoritesPage.dart';
+import 'SettingsPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DSG Reader',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -117,7 +119,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blueGrey,
+                color: Color(0xFF37474f),
               ),
               child: Text(
                 'Menu',
@@ -130,7 +132,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ListTile(
               title: const Text('Settings'),
               onTap: () {
-                // Add functionality
+                Navigator.of(context).pop(); // Close the Drawer
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const SettingsPage(),
+                );
               },
             ),
             ListTile(
