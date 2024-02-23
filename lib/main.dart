@@ -16,12 +16,29 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DSG Reader',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: dsgrThemes.lightTheme,
+      darkTheme: dsgrThemes.darkTheme,
+      themeMode: ThemeMode.system,
       home: const BottomNavigation(),
     );
   }
+}
+
+class dsgrColors {
+  static final lightModeColor = Color(0xFF37474f);
+  static final darkModeColor = Color(0xFF01111);
+}
+
+class dsgrThemes {
+  static final lightTheme = ThemeData(
+    primaryColor: dsgrColors.lightModeColor,
+    brightness: Brightness.light,
+  );
+
+  static final darkTheme = ThemeData(
+    primaryColor: dsgrColors.darkModeColor,
+    brightness: Brightness.dark,
+  );
 }
 
 class BottomNavigation extends StatefulWidget {
@@ -112,6 +129,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             label: 'History',
           ),
         ],
+        selectedItemColor: Colors.amber[800],
       ),
       endDrawer: Drawer(
         child: ListView(
@@ -139,12 +157,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 );
               },
             ),
+            const Divider(),
             ListTile(
               title: const Text('Connections'),
               onTap: () {
                 // Add functionality
               },
             ),
+            const Divider(),
             ListTile(
               title: const Text('About'),
               onTap: () {
