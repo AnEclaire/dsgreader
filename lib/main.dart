@@ -35,9 +35,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   // Stores an instance of HomePage, HistoryPage, and FavoritesPage()
   final List<Widget> _children = [
-    HomePage(),
-    HistoryPage(),
-    FavoritesPage(),
+    const HomePage(),
+    const HistoryPage(),
+    const FavoritesPage(),
   ];
 
   // Used by following method for text styling.
@@ -60,6 +60,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
     ),
   ];
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   // Entered when one of the navigation bar buttons is tapped.
   void onTabTapped(int index) {
     setState(() {
@@ -71,9 +73,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     // Similar to Swift VStack
     return Scaffold(
+      key: _scaffoldKey,
       // For title bar at top, works like HStack
       appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
         title: _widgetOptions[_currentIndex],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              _scaffoldKey.currentState?.openEndDrawer();
+            },
+          )
+        ],
       ),
 
       // For everything in middle, works like its own Z/H/VStack
@@ -81,6 +93,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
       // For configuring what is show on bottom nav bar
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blueGrey,
         onTap: onTabTapped, // Calls void method above to update index state.
         currentIndex: _currentIndex, // Stores currently browsed-to index.
         items: const [ // One entry per item in bar.
@@ -98,6 +111,43 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
         ],
       ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blueGrey,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 36,
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Settings'),
+              onTap: () {
+                // Add functionality
+              },
+            ),
+            ListTile(
+              title: const Text('Connections'),
+              onTap: () {
+                // Add functionality
+              },
+            ),
+            ListTile(
+              title: const Text('About'),
+              onTap: () {
+                // Add functionality
+              },
+            ),
+          ],
+        ),
+      )
     );
   }
 }
