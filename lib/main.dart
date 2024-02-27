@@ -1,3 +1,6 @@
+import 'package:dsgreader/utils/constants/colors.dart';
+import 'package:dsgreader/utils/theme/theme.dart';
+import 'package:dsgreader/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
 import 'HistoryPage.dart';
@@ -13,58 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      themeMode: ThemeMode.system,
+      theme: HAppTheme.lightTheme,
+      darkTheme: HAppTheme.darkTheme,
       title: 'DSG Reader',
       debugShowCheckedModeBanner: false,
-      //theme: dsgrThemes.lightTheme,
-      //darkTheme: dsgrThemes.darkTheme,
-      //themeMode: ThemeMode.system,
-      home: BottomNavigation(),
+      home: const BottomNavigation(),
     );
   }
-}
-/**
-class dsgrColors {
-  static final lightModeColor = Color(0xFF37474f);
-  static final darkModeColor = Color(0xFF01111);
-}
-
-class dsgrThemes {
-  static final lightTheme = ThemeData(
-    primaryColor: dsgrColors.lightModeColor,
-    brightness: Brightness.light,
-  );
-
-  static final darkTheme = ThemeData(
-    primaryColor: dsgrColors.darkModeColor,
-    brightness: Brightness.dark,
-  );
-}**/
-
-//final appThemeProvider = StateProvider<bool>((ref) => false);
-
-ThemeData getAppTheme(BuildContext context, bool isDarkTheme) {
-  return ThemeData(
-    scaffoldBackgroundColor: isDarkTheme ? Colors.black : Colors.white,
-    textTheme: Theme.of(context)
-      .textTheme
-      .copyWith(
-      titleSmall:
-        Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
-      )
-      .apply(
-        bodyColor: isDarkTheme ? Colors.white : Colors.black,
-        displayColor: Colors.grey,
-      ),
-    switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.all(isDarkTheme ? Colors.orange : Colors.purple),
-    ),
-    listTileTheme: ListTileThemeData(iconColor: isDarkTheme ? Colors.orange : Colors.purple),
-    appBarTheme: AppBarTheme(
-      backgroundColor: isDarkTheme ? Colors.black : Colors.white,
-      iconTheme: IconThemeData(color: isDarkTheme ? Colors.white : Colors.black54)
-    ),
-  );
 }
 
 class BottomNavigation extends StatefulWidget {
@@ -121,7 +81,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       key: _scaffoldKey,
       // For title bar at top, works like HStack
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: HAppTheme.darkTheme.primaryColor,
         title: _widgetOptions[_currentIndex],
         actions: [
           IconButton(
@@ -138,7 +98,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
       // For configuring what is show on bottom nav bar
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: HColors.primary,
         onTap: onTabTapped, // Calls void method above to update index state.
         currentIndex: _currentIndex, // Stores currently browsed-to index.
         items: const [ // One entry per item in bar.
@@ -179,7 +139,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 Navigator.of(context).pop(); // Close the Drawer
                 showModalBottomSheet(
                   context: context,
-                  builder: (context) => SettingsPage(),
+                  builder: (context) => const SettingsPage(),
                 );
               },
             ),
